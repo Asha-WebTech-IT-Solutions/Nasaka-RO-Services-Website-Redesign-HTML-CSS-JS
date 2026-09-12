@@ -1262,3 +1262,187 @@ p  { max-width: 68ch; }
   .mv-grid { gap: 1rem; }
   .hero__stats { flex-wrap: wrap; gap: 1rem; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   PATCH 2 – All requested fixes
+══════════════════════════════════════════════════════════ */
+
+/* ── Hide top-bar on mobile ── */
+@media (max-width: 768px) {
+  .top-bar { display: none !important; }
+}
+
+/* ── Mobile header overlap fix ── */
+@media (max-width: 768px) {
+  .header__inner {
+    padding: .65rem 1rem;
+    gap: .75rem;
+  }
+  .header__logo img { height: 42px !important; }
+  .header__logo .logo-text { font-size: 1.05rem; }
+  /* prevent mobile-nav overlapping content */
+  .mobile-nav {
+    position: relative;
+    z-index: 800;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+  .mobile-nav.open { padding-bottom: 1rem; }
+}
+
+/* ── Hero: image on right side ── */
+.hero__img-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+.hero__img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+}
+.hero__img-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  background: white;
+  border-radius: 12px;
+  padding: .75rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.18);
+}
+.hero__img-badge-icon {
+  width: 38px; height: 38px;
+  background: #dcfce7;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #16a34a;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+.hero__img-badge-text strong { display: block; font-size: .9rem; color: var(--dark); }
+.hero__img-badge-text span   { font-size: .72rem; color: var(--gray); }
+@media (max-width: 1024px) {
+  .hero__visual { display: none; }
+}
+
+/* ── Service detail page: image section ── */
+.service-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.service-hero-img {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.service-hero-img img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 768px) {
+  .service-hero-grid { grid-template-columns: 1fr; }
+  .service-hero-img img { height: 240px; }
+}
+
+/* ── Service issues / features grid ── */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 1.1rem;
+}
+.issue-card {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 1.1rem 1.25rem;
+  border: 1.5px solid var(--border);
+  display: flex;
+  gap: .85rem;
+  align-items: flex-start;
+  transition: var(--transition);
+}
+.issue-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+.issue-card__icon {
+  width: 36px; height: 36px; min-width: 36px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.issue-card__icon svg { color: var(--primary); width: 17px; height: 17px; }
+.issue-card h5 { font-size: .9rem; margin-bottom: .2rem; color: var(--dark); }
+.issue-card p { font-size: .82rem; color: var(--gray); max-width: none; line-height: 1.5; margin: 0; }
+
+/* ── Contact cards: clean (no nested-anchor glitch) ── */
+.contact-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: .9rem !important;
+  background: var(--white) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: .9rem 1.1rem !important;
+  border: 1.5px solid var(--border) !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: var(--transition);
+}
+.contact-card__body h5 {
+  font-size: .68rem !important;
+  color: var(--gray) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .15rem;
+}
+.contact-card__body strong,
+.contact-card__body span.val,
+.contact-card__body a {
+  font-size: .9rem;
+  color: var(--dark) !important;
+  font-weight: 600;
+  max-width: none;
+  word-break: break-word;
+  display: block;
+}
+.contact-card__body a:hover { color: var(--primary) !important; }
+
+/* ── Footer: no logo ── */
+.footer__brand .logo-wrap { display: none !important; }
+.footer__brand-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.footer__brand-name svg { color: var(--accent); }
+
+/* ══════════════════════════════════════════════════
+   PATCH 3 – Mobile nav default-hidden fix
+   Problem: padding on .mobile-nav creates 41px height
+   even when max-height:0, making "Home" visible without
+   clicking the hamburger.
+   Fix: use display:none / display:flex toggle instead.
+══════════════════════════════════════════════════ */
+.mobile-nav {
+  display: none !important;
+  flex-direction: column;
+  padding: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+.mobile-nav.open {
+  display: flex !important;
+  padding: .5rem 1.25rem 1.25rem !important;
+}
